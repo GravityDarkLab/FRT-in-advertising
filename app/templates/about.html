@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block styles %}
+	{{super()}}
+	<link rel="stylesheet" href="/static/styles/about.css">
+	<link rel="stylesheet" href="/static/styles/navbar.css">
+{% endblock %}
+{% block title %}About Us{%endblock%}
+{% block content %}
+	<div class="about-section">
+		<div class="inner-container">
+			<h1>About Us</h1>
+			<p class="text">
+				This project is a didactic tool developed for the Facial Recognition Technologies Seminar in WiSe 22/23 at the 
+				Technical University of Munich, aimed at raising the awareness of users. Contributors to the project:
+			</p>
+
+			<div class="project-members-container">
+				<div class="project-members">
+					<h1>Project Members</h1>
+					<span class="member">Achraf Labidi</span>
+					<span class="member">Nicole Kubitza</span>
+					<span class="member">Adrian Pesch</span>
+					<span class="member">Caner Karaoğlu</span>
+					<span class="member">Markus Vrancea</span>
+					<span class="member">Ege Kurt</span>
+					<span class="member">Po Chieh Lin</span>
+				</div>
+			</div>
+		</div>
+	</div>
+{%endblock%}

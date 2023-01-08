@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block scripts %}
+	{{super()}}
+	<script src="/static/vue3.2.45.global.js"></script>
+	<script src="/static/js/demo.js" type="module"></script>
+{% endblock %}
+{% block styles %}
+	{{super()}}
+	<link rel="stylesheet" href="/static/styles/demo.css">
+	<link rel="stylesheet" href="/static/styles/navbar.css">
+	<link 
+		rel="stylesheet" 
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" 
+		crossorigin="anonymous" referrerpolicy="no-referrer" 
+	/>
+{% endblock %}
+{% block title %}Demo{%endblock%}
+{% block content %}
+	<div id="heading">
+		<h1 class="subheading">Live Demo</h1>
+	</div>
+	{%raw%}
+	<div id="app">
+		<!--<div class="head">
+			Choose Model:
+			<select v-model="deepfaceModel">
+				<option v-for='model in ["VGG-Face","Facenet","Facenet512","OpenFace","DeepFace","DeepID","ArcFace","Dlib","SFace"]' :value="DeepFace">{{model}}</option>
+			</select>
+			Choose Backend:
+			<select v-model="deepfaceBackend">
+				<option v-for='backend in ["opencv","ssd","dlib","mtcnn","retinaface","mediapipe"]' :value="backend">{{backend}}</option>
+			</select>
+		</div>-->
+		<video ref="camera" style="position:absolute;top:0;right:0;width:10%;z-index:420;display:none"></video>
+		<canvas ref="canvas" style="display:none"></canvas>
+		<div class="result">
+			<div v-if="imgProcessed.resultState == 'loading'">
+				Loading
+			</div>
+			<div v-else-if="imgProcessed.resultState == 'error'">
+				{{imgProcessed.resultError}}
+			</div>
+			<div v-else-if="imgProcessed.resultState == 'loaded'">
+				<template v-if="imgProcessed.result.analysis" class="face-details">
+					<template v-for="v,k in imgProcessed.result.analysis">
+						<div class="result-key">{{k}}</div>
+						<div class="result-value">{{v}}</div>
+					</template>
+				</template>
+			</div>
+		</div>
+		<div v-if="imgProcessed.result && imgProcessed.result.ads.length >= 1" class="ad">
+			<span>{{imgProcessed.result.ads[0].label}}</span>
+			<img :src="imgProcessed.result.ads[0].file"/>
+		</div>
+		<div class="img">
+			<img :src="imgProcessed?imgProcessed.result.annotated:'data:'+img.type+';base64,'+img.content"></img>
+		</div>
+		<div v-if="imgProcessed.result && imgProcessed.result.ads.length >= 2" class="ad">
+			<span>{{imgProcessed.result.ads[1].label}}</span>
+			<img :src="imgProcessed.result.ads[1].file"/>
+		</div>
+	</div>
+	{%endraw%}
+	{% if not nosurvey %}
+		<button><a href="{{ url_for("question") }}">Continue survey</a></button>
+	{% endif %}
+{%endblock%}

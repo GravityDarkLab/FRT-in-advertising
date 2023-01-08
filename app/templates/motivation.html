@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block scripts %}
+	{{super()}}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/main.js"></script>
+{% endblock %}
+{% block styles %}
+	{{super()}}
+	<link rel="stylesheet" href="/static/styles/motiv.css">
+	<link rel="stylesheet" href="/static/styles/navbar.css">
+{% endblock %}
+{% block title %}Motivation{%endblock%}
+{% block content %}
+	<div class="shadow-to-top-first"></div>
+
+	<div id="parallax-1" style="background-image: url('../static/img/div3.jpg');">
+		<h2 class="heading translate" data-speed="0.2">Introduction</h2>
+	</div>
+
+
+	<div class="content">
+		<p class="fade">
+			Facial recognition systems match a digital image or video frame against a database of faces. 
+			By pinpointing and measuring facial features from an image, a system like this is used to authenticate users.
+			There are a wide variety of attributes that can be classified based on the appearance of an individual's face, such as a beard, 
+			a hat, etc. Facial attribute classification involves classifying various aspects of a facial image.
+		</p>
+
+		<p class="fade">
+			You are about to interact with a demo that is designed to demonstrate the logic and potential dangers of facial recognition technologies, 
+			following a flow with determined face recognition algorithms and a progressive survey. The demo works through deep learning models that have 
+			been trained using large data sets.
+		</p>
+	</div>
+
+	<div id="parallax-2">
+		<h2 class="heading translate" data-speed="0.2">Motivation</h2>
+	</div>
+	<div class="content-2">
+		<p class="fade">
+			This demo aims to inform about what Facial Recognition Technologies (FRT) are, how they work,
+			where they are currently used and where potential dangers lie. It conveys these dangers and discussions accepted 
+			by various non-governmental organizations to the user with a didactic approach.
+		</p>
+		<p class="fade">
+			It does so by demonstrating FRT in action, explaining underlying science and asking questions.
+			After every layer of experience and knowledge the questions repeat.
+		</p>
+	</div>
+
+	<div id="parallax-3">
+		<h2 class="heading translate" data-speed="0.2">Architecture</h2>
+	</div>
+
+	<div class="content-3">
+	
+		<div class="content-3-element">
+			<h3>Underlying tech:</h3>
+			<p class="block">
+				The demo is based on the python programming language and two significant frameworks. One for detecting faces on a dynamically changing image and one for analyzing facial attributes
+			</p>
+		</div>
+		<div class="content-3-element">
+			<h3>OpenCV</h3>
+			<p class="block">
+				Faces in an image were detected using the OpenCV Framework. 
+				This framework was used to detect distinct faces utilizing the "haar cascade-frontal face"-Classification.
+			</p>
+		</div>
+		<div class="content-3-element">
+			<h3>DeepFace</h3>
+			<p class="block">
+				Deepface is a lightweight framework for Python that analyses age, gender, emotions, and other facial attributes. Many models, including VGG-Face, Google FaceNet, OpenFace, Facebook DeepFace, DeepID Dlib, and SFace, are warped by this framework. The "Facebook DeepFace" model, however, was the one we employed to analyse the facial attributes in the upcoming demo.
+			</p>
+		</div>
+	</div>
+
+	<div class="outro-sentence">
+		<p style="color: black; background: goldenrod; margin-top: 0; margin-bottom: 0; width: 100%;">
+			Click the below button to start the survey.
+		</p>
+	</div>
+	{% if not nosurvey %}
+		<button><a href="{{ url_for("question") }}">Click the button below to start the survey</a></button>
+	{% endif %}
+{%endblock%}

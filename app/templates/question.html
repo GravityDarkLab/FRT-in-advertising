@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block viewport %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+{% endblock %}
+{% block styles %}
+	{{super()}}
+	<link rel="stylesheet" href="/static/styles/question.css">
+		<link rel="stylesheet" href="/static/styles/navbar.css">
+{% endblock %}
+{% block title %}Demo Survey{%endblock%}
+{% block content %}
+	<div class="heading">
+		<h2 id="head">Welcome to the demo questionnaire</h2>
+		<p id="subheading"><i>In this survey, we want to know how familiar you are with Facial
+			Classification or Facial Recognition Tehcnologies in general. You'll be asked with
+			a modified version of these questions after the demo.</i>
+		</p>
+	</div>
+
+	<form method="POST" action="/question">
+		<div id="content-1">
+			{% for question in questions %}
+				{% if question_set in question["occurence"] %}
+					<p>{{question["question"]}}</p>
+					{% if question["type"] == "free" %}
+						<textarea name="{{"{}-{}".format(question['key'],question_set)}}" required></textarea>
+					{%elif question["type"] == "1-5" %}
+						{{question["min"]}}
+						{%for i in range(1,6) %}
+							<input type="radio" name="{{"{}-{}".format(question['key'],question_set)}}", id="{{question['key']}}-{{i}}", value="{{i}}" class="larger" required/>
+							<label for="{{question['key']}}-{{i}}">{{question["values"][i-1]}}</label>
+							<br/>
+						{% endfor %}
+						{{question["max"]}}
+					{%elif question["type"] == "int" %}
+						<input type="number" min="{{question['min']}}" max="{{question['max']}}" step="{{question['step']}}" name="{{"{}-{}".format(question['key'],question_set)}}" required/>
+					{% endif %}
+					<br><br>
+				{%endif%}
+			{% endfor %}
+			<button type="submit"><h3>Submit</h3></button>
+		</div>
+	</form>
+{%endblock%}

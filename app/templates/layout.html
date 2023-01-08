@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% block viewport %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock %}
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block styles %}
+    <link rel="stylesheet" href="/static/styles/navbar.css">
+    {% endblock %}
+    {% block scripts %}{% endblock %}
+    <title>{%block title%}{%endblock%}</title>
+
+   
+  </head>
+  <body>
+    {% if nosurvey %}
+    <section class="nav-bar">
+      <ul class="topnav">
+	<li class="{{"active" if page=="intro" else ""}}"><a href="{{ url_for("intro") }}">Introduction</a></li>
+	<li class="{{"active" if page=="demo" else ""}}" class="active"><a href="{{ url_for("demo") }}">Demo</a></li>
+	<li class="{{"active" if page=="theory" else ""}}"><a href="{{ url_for("theory") }}">Theory</a></li>
+	<li class="{{"active" if page=="about" else ""}} right"><a href="{{ url_for("about") }}">About</a></li>
+      </ul>
+    </section>
+    {%endif%}
+    {% block content %}{% endblock %}
+  </body>
+</html>

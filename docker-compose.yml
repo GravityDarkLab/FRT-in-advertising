@@ -1,0 +1,21 @@
+version: "3.0"
+services:
+  app:
+    build: app
+    networks:
+      frtnet:
+        ipv4_address: "10.4.20.4"
+    ports:
+      - 5001:5000
+    volumes:
+      - ./app:/frt/app:ro
+      - ./sets:/frt/sets:ro
+      - ./storage:/frt/storage:rw
+      - ./weights:/frt/.deepface/weights
+networks:
+  frtnet:
+    # TODO
+    internal: false
+    ipam:
+      config:
+        - subnet: "10.4.20.0/24"

@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@200;300;400;500&display=swap');
+
+
+body {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: calc(16px + 1vw);
+  line-height: calc(1.1em + 0.5vw);
+  width: auto;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  height: 90vh;
+}
+
+h2 {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-size: 60px;
+  padding: 8px 24px;
+  border-radius: 16px;
+  line-height: 1.4em;
+}
+
+#parallax-1 {
+  height: cover;
+  border: none;
+  background-position: 0%;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.additional {
+  background-repeat: no-repeat;
+}
+
+div > p {
+  color: white;
+  text-align: center;
+  place-content: justify-content;
+  padding: 20px;
+  float: left;
+}
+
+.header {
+  color: white;
+  height: 200px;
+  background: black;
+}
+
+.content {
+  float: left;
+  height: auto;
+  background: black;
+  display: flex;
+  font-size: 2.1rem;
+  grid-template-columns: 6fr 6fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.content-2 {
+  float: left;
+  height: auto;
+  background: rgb(144, 132, 56);
+  display: flex;
+  font-size: 2.1rem;
+  grid-template-columns: 5fr 5fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 10px;
+}
+
+.content-4 {
+  float: left;
+  height: auto;
+  background: rgb(81, 216, 176);
+  display: flex;
+  align-items: center;
+  font-size: 2.0rem;
+  grid-template-columns: 6fr 6fr 5fr 5fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 10px;
+}
+
+.outro-sentence {
+  display: contents;
+  position: relative;
+  font-size: 2.0rem;
+}
+
+
+.content > .fade, .content-1 > .fade, .content-2 > .fade, .content-3-element > .block {
+  margin: 50px;
+  padding: 50px;
+  opacity: 1;
+  text-align: justify;
+  text-justify: distribute;
+  word-spacing: normal;
+}
+
+#parallax-2 {
+  height: 600px;
+  background-image: url('/static/img/div2.jpg');
+  max-width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#parallax-3 {
+  background-color: black;
+  height: 500px;
+  background-image: url('/static/img/div4.jpg');
+  max-width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.content-3 {
+  /* TODO: Fix the word Spacing */
+  float: left;
+  height: auto;
+  background: goldenrod;
+  font-size: 2.1rem;
+  display: block;
+  grid-template-columns: 6fr 6fr 6fr 6fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-items: normal;
+  align-items: normal;
+  word-spacing: 4px;
+}
+
+.content-3-element {
+  display: block;
+  height: auto;
+}
+
+.content-3-element h3 {
+  float: left;
+  margin-left: 100px;
+}
+
+.shadow-to-top-first {
+	position: absolute;
+	bottom: 5%;
+	height: 300px;
+	width: 100%;
+	left: 0;
+	z-index: 20;
+	background: linear-gradient(to top, black, transparent);
+}
+
+.opacity {
+	opacity: 0;
+}
+
+button {
+  width: 100%;
+  top: 0;
+  display: block;
+  height: 3rem;
+  position: relative;
+  background-color: rgba(18, 219, 78);
+  border: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif
+}
+
+button a {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+}
+
+
+@-webkit-keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+  }
+
+@keyframes fade {
+from {opacity: .4}
+to {opacity: 1}
+}
+
+@media screen and (max-width: 600px) {
+
+  ul.topnav li.right,
+  ul.topnav li {
+    float: none;
+    font-size: 0.7em;
+  }
+
+  .shadow-to-top-first {
+    bottom: 50%;
+    height: 1000px;
+    width: 100%;
+    left: 0;
+    z-index: 20;
+  }
+
+  .content, .content-2, .content-4 {
+    display: block;
+    font-size: 0.8em;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+  #parallax-1 {
+    background-size: cover;
+    height: 240px;
+  }
+
+  #parallax-2 {
+    height: 300px;
+  }
+
+  .heading {
+    padding: 12px 28px;
+    font-size: 1.0em;
+    margin-left: 30px;
+  }
+
+  .outro-sentence {
+    font-size: 0.8em;
+  }
+
+}
+
+@media screen and (max-width:1000px) {
+  .heading {
+    padding: 12px 28px;
+    font-size: 1.2em;
+  }
+
+  #parallax-1 {
+    background-size: cover;
+    height: 400px;
+  }
+
+  .shadow-to-top-first {
+    bottom: 55%;
+    height: 200px;
+    width: 100%;
+    left: 0;
+    z-index: 20;
+  }
+
+  #parallax-2 {
+    height: 300px;
+  }
+
+  
+  .content, .content-2 {
+    display: inline-block;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+  .content-3 {
+    display: inline-block;
+    font-size: 1.0em;
+    grid-template-columns: 6fr 6fr 6fr 6fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+
+  .content-4 {
+    display: inline-block;
+    font-size: 1.0em;
+    grid-template-columns: 6fr 6fr 6fr 6fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+
+  .content-3-element .block {
+    margin: 0;
+    padding: 10px;
+  }
+
+  .content-2 .fade, .content .fade {
+    margin: 0;
+  }
+
+  .content p {
+    font-size: 0.9em;
+  }
+
+  .content-2 p {
+    font-size: 0.9em;
+  }
+
+  .content-3 p, .content-3 h3 {
+    font-size: 0.9em;
+  }
+
+  .content-3 h3 {
+    margin-left: 50px;
+  }
+
+  h2 {
+    line-height: 1.2em;
+  }
+
+  .outro-sentence {
+    font-size: 1.0em;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width:1200px) {
+  .topnav {
+    padding: 80px;
+  }
+
+  h2 {
+    line-height: 1.4em;
+  }
+
+  .content, .content-2 {
+    display: block;
+    font-size: 1.0em;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+  .content-4 {
+    display: block;
+    font-size: 1.0em;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+}
+
+@media screen and (max-width:1900px) {
+  .content, .content-2 {
+    display: block;
+    font-size: 1.0em;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+}
+
+@media screen and (max-width:1300px) {
+  .content-4 {
+    display: block;
+    font-size: 1.0em;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+}

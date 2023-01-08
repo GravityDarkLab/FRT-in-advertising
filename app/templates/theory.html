@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block viewport %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+{% endblock %}
+
+{% block styles %}
+	{{super()}}
+	<link rel="stylesheet" href="/static/styles/navbar.css">
+	<link rel="stylesheet" href="/static/styles/motiv.css">
+	<link 
+		rel="stylesheet" 
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" 
+		crossorigin="anonymous" referrerpolicy="no-referrer" 
+	/>
+{% endblock %}
+
+{% block title %}Theory part of the project{%endblock%}
+{% block content %}
+	<div class="shadow-to-top-first"></div>
+
+	<div id="parallax-1" class="additional", style="background: url('../static/img/theory-frt-header.jpg') no-repeat fixed; background-size: cover; width: 100%;">
+		<h2 class="heading translate" data-speed="0.2">What is Classification in Facial Recognition Technologies and how does it work?</h2>
+	</div>
+
+
+	<div class="content">
+		<p class="fade">
+			In a narrow sense, Facial Recognition Technology (FRT) analyzes the features of one's face and identifies or classifies the face.
+			In a broad sense, face detection, face preprocessing etc., all face related operations on an image could be regarded as Facial Recognition Technology.
+		</p>
+
+		<p class="fade">
+			Classification is one sort of FRT, it can categorize the input face into different types of categories.
+			For emotion, it classifies whether the person is happy, sad, angry, surprised, disgusted or neutral.
+			For traits, it can try to predict one’s openness, conscientiousness, extroversion,
+			agreeableness, and neuroticism. For age, it predicts the age based on the photo.
+		</p>
+	</div>
+
+	<div id="parallax-2" class="additional" style="background: url('../static/img/theory-frt-training.jpg'); background-size: cover; width: 100%;">
+		<h2 class="heading translate" data-speed="0.2">Training phase</h2>
+	</div>
+	<div class="content-2" >
+		<p class="fade">
+			The model is given data with label, and it tries to figure out the relation between data and the labels.
+			For example, the model is given a picture of man’s face, and the label “angry”.
+			Then, the model tries to find the mathematical relation between each pixel of the man and the result angry.
+		</p>
+		<p class="fade">
+			Usually, the amount of the data is at the scale of ten thousand or even more. 
+			The more data it trains with that is correctly labeled, the more accurate the trained model can be.
+			On the other hand, if the dataset is too small, lacks representation of different population groups
+			or has a lot of mislabeled data, the trained model would be faulty.
+		</p>
+	</div>
+
+	<div id="parallax-3">
+		<h2 class="heading translate" data-speed="0.2">Inference phase</h2>
+	</div>
+
+	<div class="content-2" >
+		<p class="fade">
+			Now the model is trained and ready, which means that it can be applied to classify the image in the real world.
+			For most common tasks, usually it contains four stages: <i style="color: black;">detection, alignment, representation, and
+			verification.</i>
+		</p>
+		<p class="fade">
+			In the <i style="color: black;">detection</i> stage, the program tries to detect whether there is a face in the image.
+			If so, the detected face is aligned in the alignment stage,
+			in order to prevent incorrect results from a tilted face.
+
+		</p>
+
+		<p class="fade">
+			After the preprocessing, the <i style="color: black;">aligned</i> face image should be like the training data the model has seen, 
+			so it can find the <i style="color: black;">vector representations</i> of the aligned face image. 
+			Finally, the model returns the classified results in the <i style="color: black;">verification</i> phase.
+		</p>
+	</div>
+
+
+	<div id="parallax-3" style="background: url(../static/img/frt-theory-application.png) no-repeat fixed; background-size: cover; width: 100%;">
+		<h2 class="heading translate" data-speed="0.2">The application of facial classification</h2>
+	</div>
+	<div class="content-4">
+		<p class="fade">
+			With <i style="color: black;">facial classification</i>, there are lots of thing we can do, and lots of applications arise. 
+		</p>
+
+		<p class="fade">
+			In <i style="color: black;">law enforcement</i>, police can deploy this technology in the surveillance system in the city and 
+			keep an eye on potential criminals.
+		</p>
+
+		<p class="fade">
+			During the <i style="color: black;">hiring process</i>, human resource departments in big companies with many applicants
+			could use a personality classifier to filter applicants,
+			keeping those fitting in with the company culture until the next interview.
+			Like this, they can save time and labor of looking through all profiles.
+		</p>
+		
+		<p class="fade">
+			In <i style="color: black;">advertisement</i>, an application called smart retail could help the shop track the emotion and
+			the age of the customer, thus finding out their preferences and promote fitting merchandise to them.
+		</p>
+		
+	</div>
+
+	<div class="outro-sentence">
+		<p style="color: black; background:rgb(81, 216, 176); margin-top: 0; margin-bottom: 0; font-size: 25px;">
+			Nevertheless, because all these applications have been added in recent years, some of them might not be properly regulated by law.
+			In such case, bad consequence could arise, and human rights might be violated. Let’s explore the application of advertisement in smart
+			retail for instance, since the demo focuses on it.
+		</p>
+	</div>
+
+	<div id="parallax-3" style="background: url(../static/img/frt-theory-problem.png) no-repeat fixed; background-size: cover; width: 100%;">
+		<h2 class="heading translate" data-speed="0.2">Problematic recommendation</h2>
+	</div>
+
+	<div class="content-4" style="background-color: cadetblue;">
+		<p class="fade">
+			Although facial classification technologies are considered highly accurate, they might be mistaken sometimes. If a face gets misclassified, the application may show the wrong advertisement.
+		</p>
+
+		<p class="fade">
+			For example, if an old-looking boy were to be misclassified as a man of age, the advertisement of alcohol and vapes could be shown to him, which is inappropriate.
+		</p>
+
+		<p class="fade">
+			This system is still controversial even if the classification model could operate under a 100% accuracy rate.   
+		</p>
+
+		<p class="fade">
+			The merchandise could be promoted, and the company would profit. For the consumer, however, repeated exposure to the same advertisement targets the same group and causes homogenization. If smart retail becomes popular, there will be no recluse from the knowledge-gathering about the customer. Seeing the same ad that promotes a bad habit repeatedly (and perhaps with a message tailored to a person, their likes, and current mood) could lead to taking up the advertised habit.
+		</p>
+	</div>
+
+	<div class="outro-sentence">
+		<p style="color: black; background:cadetblue; margin-top: 0; margin-bottom: 0; width: 100%;">
+			Click the button below to complete the survey.
+		</p>
+	</div>
+
+
+	{% if not nosurvey %}
+		<button><a href="{{ url_for("question") }}">Finish the survey</a></button>
+	{% endif %}
+{%endblock%}

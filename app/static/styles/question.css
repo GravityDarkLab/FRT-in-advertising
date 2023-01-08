@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@200;300;400;500&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("/static/img/survey.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    background-color: rgba(57, 179, 250, 0.7);
+    background-blend-mode: multiply;
+    font-size: 1.1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.heading {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 100px;
+}
+
+#head {
+    font-size: 1.8em;
+}
+
+#subheading {
+    font-size: 18px;
+    margin-top: 10px;
+    justify-content: center;
+    font-size: larger;
+}
+
+#content-1, #content-2, #content-3, #content-4, #content-5 {
+    width: 90%;
+    margin: auto;
+}
+
+form{
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54%;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 10px;
+    padding-bottom: 60px;
+}
+
+form .box {
+    width: 98.5%;
+    height: 2.8em;
+    position: relative;
+    bottom: 10px;
+    border: 0;
+    border-radius: 5px;
+}
+
+button {
+    width: 98.5%;
+    height: 3em;
+    position: relative;
+    top: 11px;
+    background-color: rgba(18, 219, 78);
+    border: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.larger {
+    width: 20px;
+    height: 20px;
+}
+
+textarea {
+    width: 550px;
+    height: 120px;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 600px) {
+    form {
+        width: 100%;
+        margin: auto;
+    }
+}
