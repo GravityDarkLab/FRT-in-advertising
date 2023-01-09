@@ -1,6 +1,6 @@
 <h1 align="center">FRT in Advertising</h1>
 
-This project was a collaborative effort completed for a university course titled, "Making People Understand Facial Recognition Technologies: Building an AI Application as Didactic Tool.
+This project was a collaborative effort completed for a university course titled, "Making People Understand Facial Recognition Technologies: Building an AI Application as Didactic Tool".
 
 <div align="center">
 <img src="https://github.com/GravityDarkLab/FRT-in-advertising/blob/main/capture/capture.png" width="700" height="500"/>
