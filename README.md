@@ -2,6 +2,10 @@
 
 This project was a collaborative effort completed for a university course titled, "Making People Understand Facial Recognition Technologies: Building an AI Application as Didactic Tool.
 
+<div align="center">
+<img src="https://github.com/GravityDarkLab/FRT-in-advertising/blob/main/capture/capture.png" width="700" height="500"/>
+</div>
+
 ## Description:
 
 As part of this study, participants will be asked to browse through four pages on our website: introduction, demonstration, theory, and about us. Between each pair of pages, they will be required to complete a survey to assess any changes or evolution in their attitude towards the topic. There are three  surveys in total. This will allow us to track the impact of the information presented on their perspective.
