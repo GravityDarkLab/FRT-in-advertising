@@ -1,5 +1,8 @@
 <h1 align="center">FRT in Advertising</h1>
 
+> __Note: this project is put on hold as it was part of a research study and is not intended for commercial use.__
+> __Note: The purpose of this project is to provide a didactic tool to help users understand the capabilities of facial recognition technologies (FRT) and the potential implications of their use in advertising.__
+
 This project was a collaborative effort completed for a university course titled, "Making People Understand Facial Recognition Technologies: Building an AI Application as Didactic Tool".
 
 <div align="center">
