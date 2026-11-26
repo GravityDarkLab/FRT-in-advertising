@@ -87,6 +87,16 @@ describe('nextAds', () => {
     expect(twice.adSet).toBe('0-10')
   })
 
+  it('does not count two sightings as consecutive when the face left in between', () => {
+    const once = nextAds(showing, response('0-10', [toys, car], 'up'))
+    const gone = nextAds(once, response(null, []))
+    const again = nextAds(gone, response('0-10', [toys, car], 'up'))
+
+    expect(gone.ads).toEqual([beer, wine])
+    expect(again.adSet).toBe('26-40')
+    expect(again.ads).toEqual([beer, wine])
+  })
+
   it('keeps the ads on screen when the face drops out of view', () => {
     expect(nextAds(showing, response(null, []))).toBe(showing)
   })

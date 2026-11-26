@@ -55,10 +55,14 @@ export type ShownAds = {
  *
  * The API draws two new ads on every request, and single frames jitter, so the
  * ads change only when the visitor is read into a different ad set or mood on
- * two answers in a row. The very first ads are shown at once.
+ * two answers in a row. The very first ads are shown at once. An answer with
+ * no face keeps the ads but breaks the run, so two sightings either side of
+ * it do not count as consecutive.
  */
 export function nextAds(shown: ShownAds, response: AnalyzeResponse): ShownAds {
-  if (response.ad_set === null) return shown
+  if (response.ad_set === null) {
+    return shown.candidate === null ? shown : { ...shown, candidate: null }
+  }
   if (response.ad_set === shown.adSet && response.mood === shown.mood) {
     return shown.candidate === null ? shown : { ...shown, candidate: null }
   }
