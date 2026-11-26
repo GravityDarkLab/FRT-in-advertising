@@ -29,19 +29,35 @@ describe('site shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
   })
 
-  it.each(pages)('ends the $link page with links to the author', ({ path }) => {
+  it.each(pages)('ends the $link page with the author, as icon links', ({ path }) => {
     renderAt(path, <Shell />)
 
     const footer = within(screen.getByRole('contentinfo'))
-    expect(footer.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
-      'href',
-      'https://github.com/GravityDarkLab',
+    const github = footer.getByRole('link', { name: 'Achraf Labidi on GitHub' })
+    const linkedin = footer.getByRole('link', { name: 'Achraf Labidi on LinkedIn' })
+    expect(github).toHaveAttribute('href', 'https://github.com/GravityDarkLab')
+    expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/ashraf-labidi-0xff3e/')
+    // Icons only: the name is carried by the label, the picture is hidden from screen readers.
+    for (const link of [github, linkedin]) {
+      expect(link).toHaveTextContent('')
+      expect(link.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+    }
+  })
+
+  it('carries a copyright line with the current year', () => {
+    renderAt('/', <Shell />)
+
+    expect(screen.getByRole('contentinfo')).toHaveTextContent(
+      `© ${new Date().getFullYear()} Achraf Labidi`,
     )
-    expect(footer.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
-      'href',
-      'https://www.linkedin.com/in/ashraf-labidi-0xff3e/',
-    )
-    expect(screen.getByRole('contentinfo')).toHaveTextContent('Achraf Labidi')
+  })
+
+  it('still links the source code from the footer', () => {
+    renderAt('/', <Shell />)
+
+    expect(
+      within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Source on GitHub' }),
+    ).toHaveAttribute('href', 'https://github.com/GravityDarkLab/FRT-in-advertising')
   })
 
   it('marks the current page in the navigation', () => {
