@@ -1,0 +1,25 @@
+:root {
+  /* The advertiser's colour: a sale sticker. Used only on ads. */
+  --ad-yellow: #ffd60a;
+  --ad-ink: #0b2545;
+  --prose: 38rem;
+}
+
+h1,
+h2,
+h3 {
+  /* Archivo's width axis: headlines set narrow, like a billboard. */
+  font-stretch: 75%;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  /* machine-5 on white is only 2.2:1; the darker shade gives 4.8:1 in the light scheme. */
+  outline: 3px solid light-dark(var(--mantine-color-machine-9), var(--mantine-color-machine-5));
+  outline-offset: 2px;
+}

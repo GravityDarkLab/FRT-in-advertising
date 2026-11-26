@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Comma-separated origins allowed to call the API from a browser.
+      FRT_CORS_ORIGINS: ${FRT_CORS_ORIGINS:-http://localhost:5173}
+    read_only: true
+    tmpfs:
+      - /tmp

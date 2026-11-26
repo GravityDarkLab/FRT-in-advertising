@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A dumbbell"><rect width="400" height="400" fill="#FF5A36"/><circle cx="200" cy="212" r="150" fill="#FFB8A3"/>
+<g transform="rotate(-24 200 212)"><rect x="104" y="200" width="192" height="24" rx="8" fill="#E5E7EB"/>
+<rect x="64" y="146" width="44" height="132" rx="12" fill="#16181D"/><rect x="108" y="164" width="26" height="96" rx="8" fill="#3B4252"/>
+<rect x="292" y="146" width="44" height="132" rx="12" fill="#16181D"/><rect x="266" y="164" width="26" height="96" rx="8" fill="#3B4252"/>
+<rect x="74" y="158" width="8" height="52" rx="4" fill="#fff" opacity=".3"/><rect x="302" y="158" width="8" height="52" rx="4" fill="#fff" opacity=".3"/></g>
+<path d="M300 100l22-14M316 124l26-6M92 318l-24 12M82 292l-26 4" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>

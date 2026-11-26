@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A pint of beer"><rect width="400" height="400" fill="#F2A900"/><circle cx="200" cy="212" r="150" fill="#FFD86B"/>
+<path d="M262 168h26a24 24 0 0 1 24 24v52a24 24 0 0 1-24 24h-30" fill="none" stroke="#FFF6D6" stroke-width="16" stroke-linecap="round"/>
+<path d="M138 120h124l-14 196a14 14 0 0 1-14 13h-68a14 14 0 0 1-14-13z" fill="#FFF6D6"/>
+<path d="M146 156h108l-12 156a8 8 0 0 1-8 7h-68a8 8 0 0 1-8-7z" fill="#E07B00"/>
+<rect x="168" y="176" width="12" height="118" rx="6" fill="#fff" opacity=".35"/>
+<circle cx="214" cy="212" r="5" fill="#FFC14D"/><circle cx="226" cy="252" r="4" fill="#FFC14D"/><circle cx="206" cy="286" r="5" fill="#FFC14D"/>
+<rect x="128" y="104" width="144" height="54" rx="27" fill="#fff"/>
+<circle cx="156" cy="106" r="24" fill="#fff"/><circle cx="198" cy="94" r="30" fill="#fff"/><circle cx="244" cy="106" r="24" fill="#fff"/>
+<path d="M150 150v26a10 10 0 0 0 20 0v-26z" fill="#fff"/></svg>

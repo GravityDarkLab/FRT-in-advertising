@@ -1,0 +1,77 @@
+.readout {
+  margin: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  column-gap: 0.75rem;
+  align-items: baseline;
+}
+
+.term {
+  grid-row: span 2;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.value {
+  margin: 0;
+  font-weight: 800;
+  font-stretch: 75%;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.note {
+  margin-left: 0.5rem;
+  color: var(--mantine-color-dimmed);
+  font-weight: 400;
+  font-stretch: 100%;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.confidence {
+  margin: 0.3rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.track {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--mantine-color-machine-6);
+  transition: width 300ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.percent {
+  min-width: 2.6rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--mantine-font-size-sm);
+  color: light-dark(var(--mantine-color-machine-9), var(--mantine-color-machine-3));
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

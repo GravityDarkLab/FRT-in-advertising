@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Three bright bottles of alcopop"><rect width="400" height="400" fill="#E5007D"/><circle cx="200" cy="212" r="150" fill="#FF86C2"/><g transform="translate(120 0)">
+<rect x="-13" y="86" width="26" height="16" rx="4" fill="#1F1F2E"/>
+<path d="M-10 100h20v40c0 14 20 20 20 44v128a14 14 0 0 1-14 14h-32a14 14 0 0 1-14-14V184c0-24 20-30 20-44z" fill="#FFE14D"/>
+<rect x="-30" y="218" width="60" height="58" fill="#fff" opacity=".9"/>
+<circle cx="0" cy="247" r="14" fill="#FFE14D"/>
+<rect x="-20" y="150" width="7" height="46" rx="3.5" fill="#fff" opacity=".45"/></g><g transform="translate(200 0)">
+<rect x="-13" y="86" width="26" height="16" rx="4" fill="#1F1F2E"/>
+<path d="M-10 100h20v40c0 14 20 20 20 44v128a14 14 0 0 1-14 14h-32a14 14 0 0 1-14-14V184c0-24 20-30 20-44z" fill="#3DDCFF"/>
+<rect x="-30" y="218" width="60" height="58" fill="#fff" opacity=".9"/>
+<circle cx="0" cy="247" r="14" fill="#3DDCFF"/>
+<rect x="-20" y="150" width="7" height="46" rx="3.5" fill="#fff" opacity=".45"/></g><g transform="translate(280 0)">
+<rect x="-13" y="86" width="26" height="16" rx="4" fill="#1F1F2E"/>
+<path d="M-10 100h20v40c0 14 20 20 20 44v128a14 14 0 0 1-14 14h-32a14 14 0 0 1-14-14V184c0-24 20-30 20-44z" fill="#FF8A3D"/>
+<rect x="-30" y="218" width="60" height="58" fill="#fff" opacity=".9"/>
+<circle cx="0" cy="247" r="14" fill="#FF8A3D"/>
+<rect x="-20" y="150" width="7" height="46" rx="3.5" fill="#fff" opacity=".45"/></g></svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A smartphone and a smartwatch"><rect width="400" height="400" fill="#1F2937"/><circle cx="200" cy="212" r="150" fill="#22D3EE"/>
+<rect x="128" y="70" width="124" height="262" rx="22" fill="#0B1220"/><rect x="138" y="84" width="104" height="234" rx="12" fill="#2D5BFF"/>
+<rect x="172" y="92" width="36" height="10" rx="5" fill="#0B1220"/><rect x="150" y="128" width="22" height="22" rx="6" fill="#FF3B6B"/><rect x="180" y="128" width="22" height="22" rx="6" fill="#FFC400"/><rect x="210" y="128" width="22" height="22" rx="6" fill="#10B981"/><rect x="150" y="158" width="22" height="22" rx="6" fill="#fff"/><rect x="180" y="158" width="22" height="22" rx="6" fill="#8B5CF6"/><rect x="210" y="158" width="22" height="22" rx="6" fill="#FF8A3D"/><rect x="150" y="188" width="22" height="22" rx="6" fill="#3DDCFF"/><rect x="180" y="188" width="22" height="22" rx="6" fill="#fff"/><rect x="210" y="188" width="22" height="22" rx="6" fill="#E63946"/>
+<rect x="150" y="236" width="80" height="60" rx="12" fill="#fff" opacity=".2"/><path d="M160 282l16-22 14 12 18-26 12 36z" fill="#fff" opacity=".7"/>
+<rect x="272" y="150" width="50" height="170" rx="12" fill="#4B5563"/>
+<rect x="260" y="196" width="74" height="84" rx="20" fill="#0B1220"/><rect x="268" y="204" width="58" height="68" rx="13" fill="#111827"/>
+<circle cx="297" cy="238" r="20" fill="none" stroke="#22D3EE" stroke-width="6" stroke-dasharray="94 126" transform="rotate(-90 297 238)"/>
+<path d="M297 226v12l8 6" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>

@@ -1,6 +1,0 @@
-tensorflow
-flask
-deepface
-dlib
-mediapipe
-uwsgi

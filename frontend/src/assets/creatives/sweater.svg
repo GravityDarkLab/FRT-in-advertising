@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A knitted green sweater"><rect width="400" height="400" fill="#EADFCB"/><circle cx="200" cy="212" r="150" fill="#D4C1A0"/>
+<path d="M150 118l-34 20-56 128 44 20 30-66v112h132V220l30 66 44-20-56-128-34-20c-30 22-70 22-100 0z" fill="#7C9A7E"/>
+<path d="M150 118c30 26 70 26 100 0" fill="none" stroke="#5E7B61" stroke-width="12" stroke-linecap="round"/>
+<rect x="134" y="314" width="132" height="18" fill="#5E7B61"/>
+<path d="M60 266l44 20-7 15-44-20zM340 266l-44 20 7 15 44-20z" fill="#5E7B61"/>
+<polyline points="136,198 152,218 168,198 184,218 200,198 216,218 232,198 248,218 264,198" fill="none" stroke="#F4EFE4" stroke-width="6" stroke-linejoin="round"/>
+<path d="M134 240h132M134 256h132" stroke="#F4EFE4" stroke-width="3" stroke-dasharray="3 9" stroke-linecap="round"/></svg>

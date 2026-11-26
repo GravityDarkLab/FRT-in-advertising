@@ -1,0 +1,40 @@
+.card {
+  position: relative;
+  margin: 0;
+}
+
+.picture {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--mantine-radius-lg);
+}
+
+.tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--mantine-radius-sm);
+  background: rgb(255 255 255 / 85%);
+  color: var(--ad-ink);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+}
+
+/* Stuck over the picture's bottom edge, hanging off the left like a price sticker. */
+.slogan {
+  position: relative;
+  width: fit-content;
+  max-width: calc(100% - 0.5rem);
+  margin: -1.1rem 0 0 -0.4rem;
+  padding: 0.45rem 0.8rem;
+  background: var(--ad-yellow);
+  color: var(--ad-ink);
+  font-weight: 800;
+  font-stretch: 75%;
+  font-size: 1.15rem;
+  line-height: 1.15;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 var(--ad-ink);
+}

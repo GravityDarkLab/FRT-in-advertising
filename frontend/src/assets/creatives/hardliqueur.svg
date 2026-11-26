@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A tumbler of whisky on ice"><rect width="400" height="400" fill="#2B1B12"/><circle cx="200" cy="212" r="150" fill="#5C3B22"/>
+<path d="M122 132h156l-16 186a14 14 0 0 1-14 13h-96a14 14 0 0 1-14-13z" fill="#FFF3E0" opacity=".28"/>
+<path d="M131 236h138l-7 78a8 8 0 0 1-8 8h-108a8 8 0 0 1-8-8z" fill="#F29A2E"/>
+<rect x="152" y="196" width="52" height="52" rx="8" fill="#fff" opacity=".85" transform="rotate(-12 178 222)"/>
+<rect x="204" y="206" width="48" height="48" rx="8" fill="#fff" opacity=".7" transform="rotate(16 228 230)"/>
+<path d="M122 132h156l-16 186a14 14 0 0 1-14 13h-96a14 14 0 0 1-14-13z" fill="none" stroke="#FFF3E0" stroke-width="6"/>
+<rect x="146" y="152" width="9" height="60" rx="4.5" fill="#fff" opacity=".5"/></svg>

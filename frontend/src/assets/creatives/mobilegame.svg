@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A phone showing a rocket game"><rect width="400" height="400" fill="#00B8A9"/><circle cx="200" cy="212" r="150" fill="#8DEBE2"/>
+<g transform="rotate(-8 200 200)"><rect x="132" y="64" width="136" height="276" rx="26" fill="#16181D"/>
+<rect x="144" y="80" width="112" height="244" rx="14" fill="#23307A"/><circle cx="166" cy="118" r="2.5" fill="#fff" opacity=".8"/><circle cx="232" cy="136" r="2" fill="#fff" opacity=".8"/><circle cx="176" cy="176" r="2" fill="#fff" opacity=".8"/><circle cx="238" cy="204" r="2.5" fill="#fff" opacity=".8"/><circle cx="164" cy="236" r="2" fill="#fff" opacity=".8"/>
+<g transform="translate(200 176) rotate(30)"><path d="M0-44c16 14 20 40 14 66h-28c-6-26-2-52 14-66z" fill="#fff"/><circle cx="0" cy="-10" r="8" fill="#3DDCFF"/>
+<path d="M-14 6l-14 22h14zM14 6l14 22h-14z" fill="#FF3B6B"/><path d="M-8 24h16l-8 22z" fill="#FFC400"/></g>
+<circle cx="170" cy="262" r="12" fill="#FFC400"/><circle cx="170" cy="262" r="6" fill="#FFE27A"/>
+<circle cx="230" cy="284" r="20" fill="#FF3B6B"/><path d="M224 274l16 10-16 10z" fill="#fff"/></g></svg>
