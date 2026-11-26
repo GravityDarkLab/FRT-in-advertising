@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A teddy bear"><rect width="400" height="400" fill="#7FDBDA"/><circle cx="200" cy="212" r="150" fill="#FFE9A8"/>
+<ellipse cx="128" cy="250" rx="24" ry="40" fill="#B9783F" transform="rotate(35 128 250)"/><ellipse cx="272" cy="250" rx="24" ry="40" fill="#B9783F" transform="rotate(-35 272 250)"/>
+<circle cx="150" cy="336" r="30" fill="#B9783F"/><circle cx="250" cy="336" r="30" fill="#B9783F"/>
+<circle cx="150" cy="340" r="15" fill="#E7BC8E"/><circle cx="250" cy="340" r="15" fill="#E7BC8E"/>
+<ellipse cx="200" cy="276" rx="66" ry="70" fill="#B9783F"/><ellipse cx="200" cy="288" rx="38" ry="44" fill="#E7BC8E"/>
+<circle cx="146" cy="110" r="30" fill="#B9783F"/><circle cx="254" cy="110" r="30" fill="#B9783F"/><circle cx="146" cy="110" r="15" fill="#E7BC8E"/><circle cx="254" cy="110" r="15" fill="#E7BC8E"/>
+<circle cx="200" cy="152" r="68" fill="#B9783F"/><ellipse cx="200" cy="176" rx="30" ry="24" fill="#E7BC8E"/>
+<ellipse cx="200" cy="166" rx="10" ry="7" fill="#3B2414"/><path d="M200 172v10m-12 4c6 6 18 6 24 0" fill="none" stroke="#3B2414" stroke-width="4" stroke-linecap="round"/>
+<circle cx="176" cy="142" r="7" fill="#3B2414"/><circle cx="224" cy="142" r="7" fill="#3B2414"/>
+<path d="M176 214l24 10 24-10-6 22h-36z" fill="#E63946"/></svg>

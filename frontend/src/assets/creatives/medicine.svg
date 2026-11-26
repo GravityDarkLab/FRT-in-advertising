@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A blue and white capsule"><rect width="400" height="400" fill="#DCEEFF"/><circle cx="200" cy="212" r="150" fill="#A6D0FF"/>
+<g transform="rotate(-35 200 220)"><rect x="96" y="178" width="208" height="84" rx="42" fill="#fff"/>
+<path d="M200 178h62a42 42 0 0 1 0 84h-62z" fill="#1E66F5"/><rect x="124" y="192" width="64" height="12" rx="6" fill="#DCEEFF"/></g>
+<circle cx="302" cy="104" r="36" fill="#1E66F5"/><path d="M294 82h16v14h14v16h-14v14h-16v-14h-14V96h14z" fill="#fff"/>
+<circle cx="108" cy="318" r="20" fill="#fff"/><path d="M90 318h36" stroke="#A6D0FF" stroke-width="4"/></svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="A red car"><rect width="400" height="400" fill="#2D7FF9"/><circle cx="200" cy="212" r="150" fill="#B5D2FF"/>
+<ellipse cx="205" cy="298" rx="150" ry="10" fill="#1B4FB0" opacity=".35"/>
+<path d="M62 262c0-30 14-44 52-50l42-44c8-8 16-12 30-12h62c14 0 24 5 32 14l34 42c34 4 46 20 46 50v14a8 8 0 0 1-8 8H70a8 8 0 0 1-8-8z" fill="#FF3B30"/>
+<path d="M176 172h36v40h-76z" fill="#DDEEFF"/><path d="M224 172h22c8 0 13 3 18 9l24 31h-64z" fill="#DDEEFF"/>
+<rect x="62" y="246" width="298" height="10" fill="#C71F16"/>
+<rect x="330" y="226" width="24" height="12" rx="6" fill="#FFE14D"/>
+<circle cx="128" cy="284" r="32" fill="#16181D"/><circle cx="128" cy="284" r="13" fill="#E5E7EB"/>
+<circle cx="292" cy="284" r="32" fill="#16181D"/><circle cx="292" cy="284" r="13" fill="#E5E7EB"/></svg>
