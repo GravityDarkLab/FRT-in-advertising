@@ -1,0 +1,24 @@
+:root {
+  /* The advertiser's colour: a sale sticker. Used only on ads. */
+  --ad-yellow: #ffd60a;
+  --ad-ink: #0b2545;
+  --prose: 38rem;
+}
+
+h1,
+h2,
+h3 {
+  /* Archivo's width axis: headlines set narrow, like a billboard. */
+  font-stretch: 75%;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--mantine-color-machine-5);
+  outline-offset: 2px;
+}
