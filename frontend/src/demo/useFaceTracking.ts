@@ -10,6 +10,7 @@ import { useFrameLoop } from './useFrameLoop'
 export function useFaceTracking(
   videoRef: RefObject<HTMLVideoElement | null>,
   intervalMs = 100,
+  timeoutMs = 10_000,
 ): DetectResponse | null {
   const [tracked, setTracked] = useState<DetectResponse | null>(null)
   const onError = useCallback(() => setTracked(null), [])
@@ -18,6 +19,7 @@ export function useFaceTracking(
   useFrameLoop(videoRef, {
     intervalMs,
     frameWidth: 320,
+    timeoutMs,
     send: detect,
     onResult: setTracked,
     onError,

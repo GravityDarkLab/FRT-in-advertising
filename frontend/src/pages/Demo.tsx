@@ -16,17 +16,19 @@ function Live({
   stream,
   intervalMs,
   trackIntervalMs,
+  requestTimeoutMs,
   onStop,
 }: {
   stream: MediaStream
   intervalMs: number
   trackIntervalMs: number
+  requestTimeoutMs: number
   onStop: () => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const stopRef = useRef<HTMLButtonElement>(null)
-  const { result, moods, shown, error } = useAnalysisLoop(videoRef, intervalMs)
-  const tracked = useFaceTracking(videoRef, trackIntervalMs)
+  const { result, moods, shown, error } = useAnalysisLoop(videoRef, intervalMs, requestTimeoutMs)
+  const tracked = useFaceTracking(videoRef, trackIntervalMs, requestTimeoutMs)
 
   // The Start button the visitor pressed is gone; give its focus to its replacement.
   useEffect(() => stopRef.current?.focus(), [])
@@ -121,16 +123,23 @@ const problems = {
     title: 'No camera was found',
     text: 'Connect a camera and try again. Browsers only offer the camera to pages served over HTTPS or from localhost.',
   },
+  lost: {
+    title: 'The camera stopped',
+    text: 'It was disconnected, or its permission was withdrawn. Start it again to carry on.',
+  },
 }
 
 export function Demo({
   intervalMs = 1000,
   trackIntervalMs = 100,
+  requestTimeoutMs = 10_000,
 }: {
   /** Pause between full analyses. */
   intervalMs?: number
   /** Pause between the quick look-ups that move the box. */
   trackIntervalMs?: number
+  /** How long one request may take before the page gives up on it and tries again. */
+  requestTimeoutMs?: number
 }) {
   const camera = useCamera()
   const startRef = useRef<HTMLButtonElement>(null)
@@ -145,7 +154,9 @@ export function Demo({
     }
   }, [camera.stream])
   const problem =
-    camera.status === 'denied' || camera.status === 'unavailable' ? problems[camera.status] : null
+    camera.status === 'denied' || camera.status === 'unavailable' || camera.status === 'lost'
+      ? problems[camera.status]
+      : null
 
   return (
     <Container size="lg" className={classes.page}>
@@ -159,6 +170,7 @@ export function Demo({
             stream={camera.stream}
             intervalMs={intervalMs}
             trackIntervalMs={trackIntervalMs}
+            requestTimeoutMs={requestTimeoutMs}
             onStop={camera.stop}
           />
         ) : (

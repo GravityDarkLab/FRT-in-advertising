@@ -23,6 +23,7 @@ const initial: Loop = {
 export function useAnalysisLoop(
   videoRef: RefObject<HTMLVideoElement | null>,
   intervalMs = 1000,
+  timeoutMs = 10_000,
 ): Loop {
   const [state, setState] = useState(initial)
 
@@ -41,6 +42,13 @@ export function useAnalysisLoop(
     [],
   )
 
-  useFrameLoop(videoRef, { intervalMs, frameWidth: 640, send: analyze, onResult, onError })
+  useFrameLoop(videoRef, {
+    intervalMs,
+    frameWidth: 640,
+    timeoutMs,
+    send: analyze,
+    onResult,
+    onError,
+  })
   return state
 }

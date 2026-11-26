@@ -69,7 +69,10 @@ const tracked = (...boxes: Box[]): DetectResponse => ({
 })
 const movedTo: Box = { x: 320, y: 240, width: 64, height: 48 }
 
-const track = { stop: vi.fn() }
+const track = { stop: vi.fn(), addEventListener: vi.fn(), removeEventListener: vi.fn() }
+/** The handler the page registered for the camera track ending on its own. */
+const trackEnded = () =>
+  track.addEventListener.mock.calls.find(([type]) => type === 'ended')![1] as () => void
 const stream = { getTracks: () => [track] } as unknown as MediaStream
 const getUserMedia = vi.fn()
 
@@ -79,6 +82,8 @@ function cameraError(name: string) {
 
 beforeEach(() => {
   track.stop.mockClear()
+  track.addEventListener.mockClear()
+  track.removeEventListener.mockClear()
   getUserMedia.mockReset().mockResolvedValue(stream)
   Object.defineProperty(navigator, 'mediaDevices', {
     configurable: true,
@@ -91,7 +96,8 @@ beforeEach(() => {
 })
 
 const start = () => userEvent.click(screen.getByRole('button', { name: 'Start camera' }))
-const renderDemo = () => renderAt('/demo', <Demo intervalMs={5} trackIntervalMs={5} />)
+const renderDemo = (requestTimeoutMs?: number) =>
+  renderAt('/demo', <Demo intervalMs={5} trackIntervalMs={5} requestTimeoutMs={requestTimeoutMs} />)
 /** Waits until the model's reading of the face is on screen. */
 async function reading() {
   await screen.findByText('about 31')
@@ -313,6 +319,61 @@ describe('demo', () => {
     await new Promise((resolve) => setTimeout(resolve, 30))
 
     expect(vi.mocked(detect).mock.calls.length).toBe(calls)
+  })
+
+  it('leaves the live view when the camera is unplugged or its permission withdrawn', async () => {
+    renderDemo()
+    await start()
+    await reading()
+
+    act(() => trackEnded()())
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/the camera stopped/i)
+    expect(track.stop).toHaveBeenCalled()
+    expect(screen.queryByRole('region', { name: /what the model reads/i })).toBeNull()
+    const calls = vi.mocked(analyze).mock.calls.length
+    await new Promise((resolve) => setTimeout(resolve, 30))
+    expect(vi.mocked(analyze).mock.calls.length).toBe(calls)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
+    await reading()
+  })
+
+  it('stops listening to the camera track once the camera is stopped', async () => {
+    renderDemo()
+    await start()
+    await reading()
+    const handler = trackEnded()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Stop camera' }))
+
+    expect(track.removeEventListener).toHaveBeenCalledWith('ended', handler)
+  })
+
+  it('gives up on an analysis that never answers, says so, and tries again', async () => {
+    vi.mocked(analyze)
+      .mockReturnValueOnce(new Promise(() => {}))
+      .mockResolvedValue(seen('26-40', [beer, wine]))
+    renderDemo(30)
+    await start()
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/can't reach the analysis service/i)
+    expect(vi.mocked(analyze).mock.calls[0]![1]!.aborted).toBe(true)
+
+    await reading()
+    expect(screen.queryByRole('alert')).toBeNull()
+  })
+
+  it('gives up on a tracking request that never answers and carries on tracking', async () => {
+    vi.mocked(detect)
+      .mockReturnValueOnce(new Promise(() => {}))
+      .mockResolvedValue(tracked(movedTo))
+    renderDemo(30)
+    await start()
+    await reading()
+
+    await waitFor(() => expect(screen.getByTestId('face-box')).toHaveStyle({ left: '50%' }))
+    expect(vi.mocked(detect).mock.calls[0]![1]!.aborted).toBe(true)
   })
 
   it('says who the ads were chosen for', async () => {

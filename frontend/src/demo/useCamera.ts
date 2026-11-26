@@ -1,26 +1,25 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export type CameraStatus = 'idle' | 'starting' | 'live' | 'denied' | 'unavailable'
-
-function release(stream: MediaStream | null) {
-  stream?.getTracks().forEach((track) => track.stop())
-}
+export type CameraStatus = 'idle' | 'starting' | 'live' | 'denied' | 'unavailable' | 'lost'
 
 /** Owns the webcam: asks for it, hands out the stream, and always gives it back. */
 export function useCamera() {
   const [status, setStatus] = useState<CameraStatus>('idle')
   const [stream, setStream] = useState<MediaStream | null>(null)
-  const held = useRef<MediaStream | null>(null)
+  // Stops the tracks of the stream in hand and stops listening to them.
+  const letGo = useRef<(() => void) | null>(null)
   // Bumped by stop and unmount, so a permission prompt answered late is recognised as stale.
   const attempt = useRef(0)
 
-  const stop = useCallback(() => {
+  const release = useCallback((next: CameraStatus) => {
     attempt.current += 1
-    release(held.current)
-    held.current = null
+    letGo.current?.()
+    letGo.current = null
     setStream(null)
-    setStatus('idle')
+    setStatus(next)
   }, [])
+
+  const stop = useCallback(() => release('idle'), [release])
 
   const start = useCallback(async () => {
     const thisAttempt = ++attempt.current
@@ -34,11 +33,20 @@ export function useCamera() {
         video: { facingMode: 'user' },
         audio: false,
       })
+      const tracks = granted.getTracks()
       if (thisAttempt !== attempt.current) {
-        release(granted)
+        tracks.forEach((track) => track.stop())
         return
       }
-      held.current = granted
+      // A track ends on its own when the camera is unplugged or its permission
+      // is withdrawn. Without this the page would stay "live" on a dead stream.
+      const onEnded = () => release('lost')
+      tracks.forEach((track) => track.addEventListener('ended', onEnded))
+      letGo.current = () =>
+        tracks.forEach((track) => {
+          track.removeEventListener('ended', onEnded)
+          track.stop()
+        })
       setStream(granted)
       setStatus('live')
     } catch (error) {
@@ -48,12 +56,12 @@ export function useCamera() {
         (error.name === 'NotAllowedError' || error.name === 'SecurityError')
       setStatus(refused ? 'denied' : 'unavailable')
     }
-  }, [])
+  }, [release])
 
   useEffect(
     () => () => {
       attempt.current += 1
-      release(held.current)
+      letGo.current?.()
     },
     [],
   )
