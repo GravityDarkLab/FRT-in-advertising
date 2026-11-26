@@ -1,0 +1,6 @@
+*
+!pyproject.toml
+!uv.lock
+!scripts/fetch_models.py
+!src
+**/__pycache__
