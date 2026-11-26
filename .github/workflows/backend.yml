@@ -1,0 +1,99 @@
+name: backend
+
+on:
+  pull_request:
+    paths:
+      - backend/**
+      - .github/workflows/backend.yml
+  push:
+    branches: [main]
+    paths:
+      - backend/**
+      - .github/workflows/backend.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  lint:
+    name: Lint and type-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          working-directory: backend
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run ruff check --output-format=github .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          working-directory: backend
+          enable-cache: true
+      - run: uv sync --frozen
+      # The models are 116 MB and pinned by checksum in the script, so the
+      # script's hash is exactly the right cache key.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: backend/models
+          key: models-${{ hashFiles('backend/scripts/fetch_models.py') }}
+      - run: uv run python scripts/fetch_models.py
+      - run: uv run pytest --cov=frt_api --cov-report=term-missing --cov-fail-under=90
+
+  docker:
+    name: Build and smoke-test the image
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: backend
+          load: true
+          push: false
+          tags: frt-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Start the container and analyse the test portrait
+        run: |
+          docker run --detach --name api --read-only --tmpfs /tmp --publish 8000:8000 frt-api:ci
+          for _ in $(seq 1 30); do
+            curl --silent --fail localhost:8000/health && break
+            sleep 1
+          done
+          curl --silent --fail-with-body --request POST \
+            --header 'Content-Type: image/jpeg' \
+            --data-binary @tests/fixtures/portrait.jpg \
+            localhost:8000/analyze | tee response.json
+          python3 -c "import json; r = json.load(open('response.json')); assert len(r['faces']) == 1 and len(r['ads']) == 2, r"
+          curl --silent --fail localhost:8000/api/health
+      - name: Check the Lambda adapter is still in the image
+        run: docker run --rm --entrypoint test frt-api:ci -x /opt/extensions/lambda-adapter
+      - name: Show container logs
+        if: always()
+        run: docker logs api
