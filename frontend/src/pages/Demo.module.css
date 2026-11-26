@@ -1,0 +1,65 @@
+.live {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: 1.25fr 1fr;
+  }
+}
+
+/* Video and boxes are mirrored together, so the picture behaves like a mirror
+   and the boxes still sit on the faces. */
+.stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-lg);
+  background: #000;
+  transform: scaleX(-1);
+}
+
+.video {
+  display: block;
+  width: 100%;
+  min-height: 12rem;
+}
+
+.box,
+.otherBox {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 6px;
+  pointer-events: none;
+  /* Positions arrive about eight times a second. A linear glide of the same
+     length joins them into continuous movement instead of a series of hops. */
+  transition:
+    left 120ms linear,
+    top 120ms linear,
+    width 120ms linear,
+    height 120ms linear;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.box {
+  border: 3px solid var(--mantine-color-machine-5);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 40%);
+}
+
+/* Faces the model found but did not analyse. */
+.otherBox {
+  border: 2px dashed rgb(255 255 255 / 80%);
+}
+
+.panelTitle {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.ads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
