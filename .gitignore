@@ -1,4 +1,23 @@
-./sets
-./storage
-./weights
 .DS_Store
+
+# backend
+backend/.venv/
+backend/models/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+.claude/
+.superpowers/
+superpowers/
+
+# IDEs
+.idea/
