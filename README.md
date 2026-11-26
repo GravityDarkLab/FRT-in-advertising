@@ -11,7 +11,7 @@ It was built as a teaching tool and a small user study for the seminar "Making P
 - **[The 2022 paper](frontend/public/paper/facial-classification-technologies-in-advertising-2022.pdf)** (PDF, 10 pages): *Facial Classification Technologies in Advertising*, by the seven members of the original group. It covers where the technology is used, a commercial product the demo imitates, the ethical objections, and a study with 51 participants. Most of them rejected facial classification for personalised advertising and hiring, and their views did not change significantly while using the site.
 - **[The 2026 update](docs/paper/2026-update.md)**: what the rebuild changed, what was measured, and which of the paper's statements still hold. The rebuild runs no questionnaire and stores nothing, so there is no new user study; the findings about attitudes are those of 2022.
 
-The site's About page presents both and lists every source.
+The site's [About page](frontend/src/pages/About.tsx) presents both and lists every source.
 
 ## How it works
 
@@ -25,14 +25,14 @@ browser ── one frame (JPEG, 640 px wide) ──▶ API
 browser ◀── JSON: boxes, attributes, ads ─── API
 ```
 
-- **`frontend/`** is a static single-page site: TypeScript, React, Mantine, Vite. About once a second it sends a frame for full analysis; about eight times a second it sends a smaller one just to find the face, so the box follows a moving face.
-- **`backend/`** is a stateless Python API: FastAPI and ONNX Runtime. Three models; a full analysis takes about 50 ms on a laptop CPU, finding the face alone about 2 ms.
+- **`frontend/`** is a static single-page site: [TypeScript][typescript], [React][react], [Mantine][mantine], [Vite][vite]. About once a second it sends a frame for full analysis; about eight times a second it sends a smaller one just to find the face, so the box follows a moving face.
+- **`backend/`** is a stateless Python API: [FastAPI][fastapi] and [ONNX Runtime][onnxruntime]. [Three models](#the-models-and-how-they-were-chosen) ([YuNet][yunet], [FairFace][fairface-onnx], [HSEmotion][hsemotion]); a full analysis takes about 50 ms on a laptop CPU, finding the face alone about 2 ms.
 
 **Nothing is stored.** A frame lives in the API's memory for the length of one request. It is never written to disk and never logged. There are no accounts, cookies or analytics.
 
 ## Run it locally
 
-You need [Docker](https://www.docker.com/) (or [uv](https://docs.astral.sh/uv/)) for the API, and Node 24+ with [pnpm](https://pnpm.io/) for the site.
+You need [Docker](https://www.docker.com/) (or [uv](https://docs.astral.sh/uv/)) for the API, and [Node](https://nodejs.org/) 24+ with [pnpm](https://pnpm.io/) for the site.
 
 Start the API on port 8000. The first build downloads the models (116 MB):
 
@@ -64,7 +64,7 @@ cd backend && uv sync && uv run python scripts/fetch_models.py && uv run uvicorn
 | Frontend lint, format, types | `pnpm lint && pnpm format:check && pnpm typecheck` |
 | Frontend production build | `pnpm build` |
 
-Backend tests that need the real models are skipped until `scripts/fetch_models.py` has run. GitHub Actions runs all of the above on every pull request, builds the Docker image, starts it, and has it analyse a test portrait.
+Backend tests that need the real models are skipped until [`scripts/fetch_models.py`](backend/scripts/fetch_models.py) has run. [GitHub Actions](.github/workflows) runs all of the above on every pull request, builds the Docker image, starts it, and has it analyse a test portrait.
 
 ## The API
 
@@ -105,17 +105,17 @@ curl -X POST -H 'Content-Type: image/jpeg' --data-binary @backend/tests/fixtures
 
 Faces are sorted largest first and only the largest is analysed.
 
-Ads are targeted in two steps. The estimated age, rounded down, selects one of six ad sets (`ad_set`). The face's mood then decides within that set: ads that have a slogan written for the mood are preferred and shown with it. A neutral face, or a mood reading more likely wrong than right (confidence under 50 %), leaves the top-level `mood` as `null` and the ads are chosen by age alone. Mood never widens the choice beyond the age set.
+Ads are targeted in two steps. The estimated age, rounded down, selects one of [six ad sets](backend/src/frt_api/ad_catalogue.py) (`ad_set`). The face's mood then decides within that set: ads that have a slogan written for the mood are preferred and shown with it. A neutral face, or a mood reading more likely wrong than right (confidence under 50 %), leaves the top-level `mood` as `null` and the ads are chosen by age alone. Mood never widens the choice beyond the age set.
 
 ### Emotion, mood and confidence
 
-The emotion model's single-emotion answers are unreliable, so three things are done to them:
+The [emotion model][hsemotion]'s single-emotion answers are unreliable, so three things are done to them:
 
 - **Contempt is dropped.** On labelled faces the model answered "contempt" for 5 % of them and was right for none; without it accuracy rose from 53.0 % to 55.6 %.
 - **Emotions are pooled into four moods.** Happiness and surprise are `up`, sadness and fear are `low`, anger and disgust are `tense`, and `neutral` stays. The model confuses neighbours far more than groups: it is right about the mood for 66 % of faces, against 56 % for the single emotion.
-- **The mood's confidence is calibrated.** The model's own score is a poor guide: it said `up` with an average score of 0.53 and was right 82 % of the time, and said `tense` at 0.67 and was right 53 %. A per-mood logistic fit turns the score into "how often is this reading right", which cut the calibration error on held-out faces from 0.109 to 0.037. A clear smile now reads as 80–95 % happy instead of about 35 %.
+- **The mood's confidence is calibrated.** The model's own score is a poor guide: it said `up` with an average score of 0.53 and was right 82 % of the time, and said `tense` at 0.67 and was right 53 %. A [per-mood logistic fit](docs/paper/2026-update.md#4-emotion) turns the score into "how often is this reading right", which cut the calibration error on held-out faces from 0.109 to 0.037. A clear smile now reads as 80–95 % happy instead of about 35 %.
 
-The calibration was fitted on 700 FER2013 test faces, which are small greyscale crops; a webcam is a different setting, so treat the percentages as indicative. `attributes.emotion` still carries the single most likely emotion with the model's raw score.
+The calibration was fitted on 700 [FER2013][fer2013] test faces, which are small greyscale crops; a webcam is a different setting, so treat the percentages as indicative. `attributes.emotion` still carries the single most likely emotion with the model's raw score.
 
 The site adds two things on top: the mood shown is the most common one over the last three frames, and the ads change only when a new ad set or mood is read twice in a row. Errors: 413 too large, 415 wrong type, 422 not a JPEG, PNG or WebP image, or more than 12 megapixels. Interactive documentation is at `/docs` while the API is running.
 
@@ -137,34 +137,34 @@ It runs the detector alone, so it is cheap enough to call several times a second
 
 ## The models, and how they were chosen
 
-Candidates were scored on the same labelled photos: 600 from the FairFace validation set, 600 from UTKFace and 700 from the FER2013 test set. With 600 photos, a gap under about four points is noise.
+Candidates were scored on the same labelled photos: 600 from the [FairFace validation set][fairface-data], 600 from [UTKFace][utkface] and 700 from the [FER2013 test set][fer2013]. With 600 photos, a gap under about four points is noise. The [2026 update](docs/paper/2026-update.md#3-choosing-the-models) has the full account.
 
 | Model | Size | Gender (FairFace / UTKFace) | Age bracket, exact / within one | Race, 6 groups |
 |---|---|---|---|---|
-| **FairFace ResNet-34** (used) | 85 MB | **92.7 % / 93.7 %** | **57.5 % / 96.5 %** | **77.0 %** |
-| FastFace teacher | 83 MB | 91.5 % / 98.5 %* | 53.5 % / 94.8 % | none |
-| DeepFace (used by v1) | 1.5 GB | 75.7 % / 79.5 % | 35.0 % / 71.8 % | 61.2 % |
-| GoogLeNet age and gender (2015) | 48 MB | 78.0 % / 76.5 % | 31.5 % / 70.8 % | none |
+| **[FairFace ResNet-34][fairface-onnx]** (used) | 85 MB | **92.7 % / 93.7 %** | **57.5 % / 96.5 %** | **77.0 %** |
+| [FastFace teacher][fastface] | 83 MB | 91.5 % / 98.5 %* | 53.5 % / 94.8 % | none |
+| [DeepFace][deepface] (used by v1) | 1.5 GB | 75.7 % / 79.5 % | 35.0 % / 71.8 % | 61.2 % |
+| [GoogLeNet age and gender][googlenet] (2015) | 48 MB | 78.0 % / 76.5 % | 31.5 % / 70.8 % | none |
 
 \* FastFace was trained on UTKFace, so that figure is inflated.
 
-FairFace natively predicts seven race groups; scored on all seven it is right for 70.2 % of faces. The table merges East and Southeast Asian into one group so that it can be compared with DeepFace, which has six.
+[FairFace][fairface-paper] natively predicts seven race groups; scored on all seven it is right for 70.2 % of faces. The table merges East and Southeast Asian into one group so that it can be compared with DeepFace, which has six.
 
-For emotion, HSEmotion (EfficientNet-B2) was chosen on its published AffectNet result of 63 % over eight classes; on FER2013 the four candidates scored within a few points of each other (50–57 %). Emotion is the least reliable attribute whichever model is used.
+For emotion, [HSEmotion][hsemotion] (EfficientNet-B2) was chosen on its [published][hsemotion-paper] [AffectNet][affectnet] result of 63 % over eight classes; on [FER2013][fer2013] the four candidates scored within a few points of each other (50–57 %). Emotion is the least reliable attribute whichever model is used.
 
-Age comes in nine brackets. The single number shown is the probability-weighted midpoint of the brackets, and it is rounded down before an ad set is chosen. On UTKFace it puts a face on the right side of eighteen 97.5 % of the time.
+Age comes in nine brackets. The single number shown is the probability-weighted midpoint of the brackets, and it is rounded down before an ad set is chosen. On [UTKFace][utkface] it puts a face on the right side of eighteen 97.5 % of the time.
 
 | File | Purpose | Source | Licence |
 |---|---|---|---|
-| `face_detection_yunet_2023mar.onnx` | Face detection | [opencv/opencv_zoo](https://github.com/opencv/opencv_zoo) | MIT |
+| `face_detection_yunet_2023mar.onnx` | Face detection | [opencv/opencv_zoo][yunet] | MIT |
 | `fairface.onnx` | Age, gender, race | [yakhyo/fairface-onnx](https://github.com/yakhyo/fairface-onnx), an export of [FairFace](https://github.com/dchen236/FairFace) | Stated as CC BY 4.0 by the exporter; the FairFace authors publish no licence file for the weights |
-| `enet_b2_8.onnx` | Emotion | [av-savchenko/face-emotion-recognition](https://github.com/av-savchenko/face-emotion-recognition) | Apache-2.0 code; trained on AffectNet, a research-only dataset |
+| `enet_b2_8.onnx` | Emotion | [av-savchenko/face-emotion-recognition](https://github.com/av-savchenko/face-emotion-recognition) | Apache-2.0 code; trained on [AffectNet][affectnet], a research-only dataset |
 
-The models are not in this repository. `backend/scripts/fetch_models.py` downloads them and checks each against a pinned SHA-256. If you plan any commercial use, clear the model licences first.
+The models are not in this repository. [`backend/scripts/fetch_models.py`](backend/scripts/fetch_models.py) downloads them and checks each against a pinned SHA-256. If you plan any commercial use, clear the model licences first.
 
 ## Deploying to AWS
 
-Nothing is deployed yet. Both halves are ready for one CloudFront distribution with two origins, told apart by path:
+Nothing is deployed yet. Both halves are ready for one [CloudFront][cloudfront] distribution with two origins, told apart by path:
 
 ```
 browser ── https://your-domain ──▶ CloudFront
@@ -176,21 +176,21 @@ The site and the API then share one HTTPS origin, so there is no CORS to configu
 
 ### The site
 
-- `pnpm build`, then upload `frontend/dist/` to a private bucket. No build variable is needed: the site calls `/api` on its own origin.
-- The site uses clean URLs (`/demo`, `/theory`), so CloudFront must answer unknown paths with `/index.html` and status 200 (a custom error response for 403 and 404, or a viewer-request function).
+- `pnpm build`, then upload `frontend/dist/` to a private [S3][s3] bucket. No build variable is needed: the site calls `/api` on its own origin.
+- The site uses clean URLs (`/demo`, `/theory`), so CloudFront must answer unknown paths with `/index.html` and status 200 (a [custom error response][cf-errors] for 403 and 404, or a viewer-request function).
 - Everything under `assets/` has a content hash in its name and can be cached for a year (`Cache-Control: public, max-age=31536000, immutable`). `index.html` must not be cached (`no-cache`).
 
 ### The API
 
-- The image runs on Lambda as it is. It carries the [AWS Lambda Web Adapter](https://github.com/awslabs/aws-lambda-web-adapter), which turns each invocation into an ordinary HTTP request to the server inside. Outside Lambda the adapter is never started.
-- Lambda pulls images only from ECR. Build for the function's architecture, for example `docker buildx build --platform linux/arm64 backend`.
-- Put an API Gateway HTTP API in front, with one route, `ANY /api/{proxy+}`, and throttling. The API is open and unauthenticated; throttling there and a reserved-concurrency limit on the function are the ceiling on spend.
+- The image runs on [Lambda][lambda] as it is. It carries the [AWS Lambda Web Adapter](https://github.com/awslabs/aws-lambda-web-adapter), which turns each invocation into an ordinary HTTP request to the server inside. Outside Lambda the adapter is never started.
+- Lambda pulls [container images][lambda-images] only from [ECR][ecr]. Build for the function's architecture, for example `docker buildx build --platform linux/arm64 backend`.
+- Put an [API Gateway HTTP API][http-api] in front, with one route, `ANY /api/{proxy+}`, and [throttling][http-api-throttling]. The API is open and unauthenticated; throttling there and a [reserved-concurrency][lambda-concurrency] limit on the function are the ceiling on spend.
 - On the CloudFront `/api/*` behaviour: disable caching, allow `POST`, and forward the `Content-Type` header (the API rejects uploads without it).
 - The API answers under `/api` as well as at the root, so nothing between the browser and the function has to rewrite paths.
 - Lambda ties CPU to memory. About 2 GB is a starting point, to be measured.
 - Expect about nine requests a second from each visitor with the camera on: eight small `/detect` calls and one `/analyze`.
 
-This was checked under AWS's Lambda Runtime Interface Emulator with API Gateway events: `/api/health`, `/api/detect` and `/api/analyze` answer, and a wrong content type is refused. It has not run on Lambda itself, so cold-start time and speed there are unmeasured.
+This was checked under AWS's [Lambda Runtime Interface Emulator][rie] with API Gateway events: `/api/health`, `/api/detect` and `/api/analyze` answer, and a wrong content type is refused. It has not run on Lambda itself, so cold-start time and speed there are unmeasured.
 
 ### Elsewhere
 
@@ -200,8 +200,37 @@ The API is also a plain container: port 8000, a `/health` check, about 300 MB of
 
 This version (2026) is an individual rework by Achraf Labidi.
 
-The original version (2022/23, on the `deprecated-v1` branch) was a group project by Achraf Labidi, Nicole Kubitza, Adrian Pesch, Caner Karaoğlu, Markus Vrancea, Ege Kurt and Po Chieh Lin. The idea, the ad sets and much of the explanatory text come from that work.
+The original version (2022/23, on the [`deprecated-v1`](../../tree/deprecated-v1) branch) was a group project by Achraf Labidi, Nicole Kubitza, Adrian Pesch, Caner Karaoğlu, Markus Vrancea, Ege Kurt and Po Chieh Lin. The idea, the ad sets and much of the explanatory text come from that work.
 
-The advertisements were drawn for this project and refer to no real brand. The test portrait is NASA's public-domain photograph of astronaut Eileen Collins.
+The advertisements were drawn for this project and refer to no real brand. The [test portrait](backend/tests/fixtures/portrait.jpg) is NASA's public-domain photograph of astronaut Eileen Collins.
 
 Contact: Achraf Labidi on [LinkedIn](https://www.linkedin.com/in/ashraf-labidi-0xff3e/). More projects: [GravityDarkLab](https://github.com/GravityDarkLab).
+
+[typescript]: https://www.typescriptlang.org/
+[react]: https://react.dev/
+[mantine]: https://mantine.dev/
+[vite]: https://vite.dev/
+[fastapi]: https://fastapi.tiangolo.com/
+[onnxruntime]: https://onnxruntime.ai/
+[yunet]: https://github.com/opencv/opencv_zoo/tree/main/models/face_detection_yunet
+[fairface-onnx]: https://github.com/yakhyo/fairface-onnx
+[fairface-data]: https://github.com/dchen236/FairFace
+[fairface-paper]: https://arxiv.org/abs/1908.04913
+[hsemotion]: https://github.com/av-savchenko/face-emotion-recognition
+[hsemotion-paper]: https://arxiv.org/abs/2103.17107
+[affectnet]: https://arxiv.org/abs/1708.03985
+[utkface]: https://susanqq.github.io/UTKFace/
+[fer2013]: https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge
+[fastface]: https://huggingface.co/iFurySt/fastface
+[deepface]: https://github.com/serengil/deepface
+[googlenet]: https://github.com/onnx/models/tree/main/validated/vision/body_analysis/age_gender
+[cloudfront]: https://aws.amazon.com/cloudfront/
+[s3]: https://aws.amazon.com/s3/
+[cf-errors]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GeneratingCustomErrorResponses.html
+[lambda]: https://aws.amazon.com/lambda/
+[lambda-images]: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
+[lambda-concurrency]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html
+[ecr]: https://aws.amazon.com/ecr/
+[http-api]: https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html
+[http-api-throttling]: https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-throttling.html
+[rie]: https://github.com/aws/aws-lambda-runtime-interface-emulator
