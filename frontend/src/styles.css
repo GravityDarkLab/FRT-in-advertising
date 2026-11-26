@@ -19,6 +19,7 @@ p {
 }
 
 :focus-visible {
-  outline: 3px solid var(--mantine-color-machine-5);
+  /* machine-5 on white is only 2.2:1; the darker shade gives 4.8:1 in the light scheme. */
+  outline: 3px solid light-dark(var(--mantine-color-machine-9), var(--mantine-color-machine-5));
   outline-offset: 2px;
 }
